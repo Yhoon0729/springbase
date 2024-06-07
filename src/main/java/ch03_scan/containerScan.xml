@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd">
+             
+	<context:component-scan base-package="ch03_di" />
+	
+	<bean id="displayMode" class="ch03_di.DisplayMode" p:type="DETAIL" />
+
+	<bean id="windowSensor" class="ch03_di.InfraredRaySensor">
+		<!-- 생성자(String) -->
+		<constructor-arg value="창센서" />
+	</bean>
+
+	<bean id="doorSensor" class="ch03_di.InfraredRaySensor">
+		<!-- 생성자(String) -->
+		<constructor-arg value="현관센서" />
+	</bean>
+
+	<!-- Camera.setNumber(1) -->
+	<bean id="camera1" class="ch03_di.Camera">
+		<property name="number" value="1"></property>
+	</bean>
+	
+	<bean id="camera2" class="ch03_di.Camera" p:number="2" />
+	<bean id="camera3" class="ch03_di.Camera" p:number="3" />
+	<bean id="camera4" class="ch03_di.Camera" p:number="4" />
+</beans>

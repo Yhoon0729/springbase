@@ -1,27 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans  xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:p="http://www.springframework.org/schema/p"
-		xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
              http://www.springframework.org/schema/beans/spring-beans.xsd">
-             
+
 	<bean id="executor" class="ch02_di.Executor">
-		<property name="worker" ref="worker"/>
+		<property name="worker" ref="worker" />
 		<!-- setWorker(Worker worker) -->
 	</bean>
-	
-	<bean id="worker" class="ch02_di.Worker"/>
-	
-	<bean id="alarmDevice" class="ch02_di.SnsAlarmDevice"/>
-	
+
+	<bean id="worker" class="ch02_di.Worker" scope="prototype" />
+
+	<bean id="alarmDevice" class="ch02_di.SnsAlarmDevice" />
+
 	<bean id="viewer" class="ch02_di.MonitorViewer">
-		<property name="displayMode" ref="displayMode"/>
+		<property name="displayMode" ref="displayMode" />
 	</bean>
-	
-	<bean id="displayMode" class="ch02_di.DisplayMode" p:type="DETAIL"/>
-	
+
+	<bean id="displayMode" class="ch02_di.DisplayMode" p:type="DETAIL" />
+
 	<bean id="homeController" class="ch02_di.HomeController">
-		<property name="alarmDevice" ref="alarmDevice"/>
-		<property name="viewer" ref="viewer"/>
+		<property name="alarmDevice" ref="alarmDevice" />
+		<property name="viewer" ref="viewer" />
+		<property name="camera1" ref="camera1" />
+		<property name="camera2" ref="camera2" />
+		<property name="camera3" ref="camera3" />
+		<property name="camera4" ref="camera4" />
+
+		<property name="sensors">
+			<list>
+				<ref bean="windowSensor" />
+				<ref bean="doorSensor" />
+			</list>
+		</property>
 	</bean>
+
+	<bean id="windowSensor" class="ch02_di.InfraredRaySensor">
+		<!-- 생성자(String) -->
+		<constructor-arg value="창센서" />
+	</bean>
+
+	<bean id="doorSensor" class="ch02_di.InfraredRaySensor">
+		<!-- 생성자(String) -->
+		<constructor-arg value="현관센서" />
+	</bean>
+
+	<!-- Camera.setNumber(1) -->
+	<bean id="camera1" class="ch02_di.Camera">
+		<property name="number" value="1"></property>
+	</bean>
+	<bean id="camera2" class="ch02_di.Camera" p:number="2" />
+	<bean id="camera3" class="ch02_di.Camera" p:number="3" />
+	<bean id="camera4" class="ch02_di.Camera" p:number="4" />
 </beans>

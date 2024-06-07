@@ -1,5 +1,8 @@
-package ch02_di;
+package ch03_di;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class SnsAlarmDevice implements AlarmDevice{
 
 	@Override

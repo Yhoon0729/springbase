@@ -1,4 +1,4 @@
-package ch02_di;
+package ch03_di;
 
 public class DisplayMode {
 

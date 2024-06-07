@@ -1,17 +1,33 @@
-package ch02_di;
+package ch03_di;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
 public class HomeController {
+	@Autowired
 	AlarmDevice alarmDevice;
+	
+	@Autowired
 	Viewer viewer;
+	
+	@Resource(name="camera1")
 	Camera camera1;
+	@Resource(name="camera2")
 	Camera camera2;
+	@Resource(name="camera3")
 	Camera camera3;
+	@Resource(name="camera4")
 	Camera camera4;
+	
 	List<InfraredRaySensor> li;
 	
 	private Recorder recorder;
+	
 	public void init() {
 		viewer.add(camera1);
 		viewer.add(camera2);
@@ -56,6 +72,7 @@ public class HomeController {
 	public void setCamera4(Camera camera4) {
 		this.camera4 = camera4;
 	}
+	
 	
 	public void setSensors(List<InfraredRaySensor> li) {
 		this.li = li;

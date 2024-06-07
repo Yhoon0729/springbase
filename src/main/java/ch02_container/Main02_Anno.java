@@ -1,16 +1,17 @@
 package ch02_container;
 
-import org.springframework.context.support.GenericXmlApplicationContext;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import ch02_di.Executor;
 import ch02_di.HomeController;
 import ch02_di.InfraredRaySensor;
 import ch02_di.WorkUnit;
 
-public class Main01_xml {
+public class Main02_Anno {
 	public static void main(String[] args) {
-		GenericXmlApplicationContext ctx = 
-				new GenericXmlApplicationContext("classpath:ch02_container/Container01.xml");
+		ApplicationContext ctx =
+				new AnnotationConfigApplicationContext(ContainerAnno.class);
 		System.out.println("====================");
 		Executor exec = ctx.getBean("executor", Executor.class);
 		exec.addUnit(new WorkUnit());
