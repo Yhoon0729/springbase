@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +16,7 @@ public class HomeController {
 	@Autowired
 	Viewer viewer;
 	
+	// 객체는 하나이기 때문에 @Resource로 해야 함
 	@Resource(name="camera1")
 	Camera camera1;
 	@Resource(name="camera2")
@@ -34,7 +36,7 @@ public class HomeController {
 		viewer.add(camera3);
 		viewer.add(camera4);
 		System.out.println("redorder:" + recorder);
-	}
+	} // end of init()
 	
 	public void checkSensorAndAlarm() {
 		for(InfraredRaySensor s : li) {
@@ -42,8 +44,8 @@ public class HomeController {
 			if(s.isObjectFounded()) {
 				alarmDevice.alarm(s.getName());
 			}
-		}
-	}
+		} // end of for(InfraredRaySensor s : li)
+	} // end of checkSensorAndAlarm()
 	
 	public void showCameraImage() {
 		viewer.draw();
@@ -74,6 +76,9 @@ public class HomeController {
 	}
 	
 	
+	// 여러 객체를 추가하여 리스트에 넣는다
+	@Autowired
+	@Qualifier("intrusionDetection")
 	public void setSensors(List<InfraredRaySensor> li) {
 		this.li = li;
 	}

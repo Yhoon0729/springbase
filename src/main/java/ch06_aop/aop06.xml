@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/aop
+             http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="articleDao" class="ch06_aop.OracleArticleDao" />
+
+	<bean id="write" class="ch06_aop.WriteImpl">
+		<constructor-arg ref="articleDao" />
+	</bean>
+
+	<bean id="read" class="ch06_aop.ReadImpl">
+		<constructor-arg ref="articleDao" />
+	</bean>
+	
+	<bean id="logging" class="ch06_aop.LoggingAspect" />
+
+	<aop:config>
+		<aop:pointcut
+			expression="execution(public * ch06_aop.*Impl.*(..))"
+			id="servicepointcut" />
+
+		<aop:aspect id="loggingAspect" ref="logging">
+			<aop:around method="logging"
+				pointcut-ref="servicepointcut" />
+		</aop:aspect>
+	</aop:config>
+</beans>

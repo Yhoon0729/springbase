@@ -15,11 +15,13 @@
 	<bean id="windowSensor" class="ch03_di.InfraredRaySensor">
 		<!-- 생성자(String) -->
 		<constructor-arg value="창센서" />
+		<qualifier value="intrusionDetection"/>
 	</bean>
 
 	<bean id="doorSensor" class="ch03_di.InfraredRaySensor">
 		<!-- 생성자(String) -->
 		<constructor-arg value="현관센서" />
+		<qualifier value="intrusionDetection"/>
 	</bean>
 
 	<!-- Camera.setNumber(1) -->

@@ -1,5 +1,8 @@
-package ch01_di;
+package ch04_di;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class ChangePasswordService {
 	
 	MemberDao memberDao;
@@ -14,12 +17,10 @@ public class ChangePasswordService {
 		Member member = memberDao.selectByEmail(email);
 		
 		if (member == null) {
-			throw new MemberNotFoundException();
+			throw new DuplicateMemberException();
 		} // end of if (member != null)
 		
 		member.changePassword(oldPw, newPw);
 		memberDao.update(member);
 	} // end of changePassword()
-	
-	
 } // end of class ChangePasswordService

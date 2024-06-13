@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+             http://www.springframework.org/schema/beans/spring-beans.xsd
+             http://www.springframework.org/schema/context
+             http://www.springframework.org/schema/context/spring-context.xsd
+             http://www.springframework.org/schema/aop
+             http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<bean id="loggingAdvice" class="ch07_aop.LoggingAdvice"/>
+	
+	<bean id="cacheAdvice" class="ch07_aop.ArticleCacheAdvice">
+	
+	</bean>
+	
+	<aop:config>
+		<aop:pointcut expression="execution(public * ch07_aop..*(..))" 
+			id="publicMethod"/>
+	
+		<aop:aspect id="loggingtAspect" ref="loggingAdvice">
+			<aop:before method="before" pointcut-ref="publicMethod"/>
+			
+			<aop:after-returning method="afterReturning"
+			 pointcut-ref="publicMethod" returning="ret"/>
+			 
+			 <aop:after-throwing method="afterThrowing"
+			 pointcut-ref="publicMethod" throwing="ex"/>
+			 
+			 <aop:after method="afterFinally"
+			 pointcut-ref="publicMethod"/>
+		</aop:aspect>
+		
+		<aop:aspect id="cacheAspect" ref="cacheAdvice">
+			<aop:around method="cache"
+			pointcut-ref="execution(public * *..ReadArticleService.*(..))"/>
+		</aop:aspect>
+		
+	</aop:config>
+</beans>
