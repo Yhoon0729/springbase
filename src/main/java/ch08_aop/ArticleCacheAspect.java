@@ -1,14 +1,20 @@
-package ch07_aop;
+package ch08_aop;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
-public class ArticleCacheAdvice {
+@Aspect
+@Component
+public class ArticleCacheAspect {
 
    private Map<Integer, Article> cache = new HashMap<>();
    
+   @Around("execution(public * *..ReadArticleService.*(..))")
    public Article cache( ProceedingJoinPoint joinPoint) throws Throwable {
       
       System.out.println("[ACA] cache before 실행");
